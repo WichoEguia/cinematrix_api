@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
+
 
 let EnumSubtitulada = {
     values: ['Y', 'N'],
@@ -10,10 +12,16 @@ let EnumClasificacion = {
     messages: '{VALUE} no es valido'
 }
 
+let estatusEnum = {
+    values: ['activo', 'baja'],
+    message: '{VALUE} no es valido'
+}
+
 let Schema = mongoose.Schema;
 let peliculaSchema = new Schema({
     titulo: {
         type: String,
+        unique: true,
         required: [true, 'El titulo es requerido']
     },
     director: {
@@ -21,7 +29,12 @@ let peliculaSchema = new Schema({
         required: [true, 'El nombre del director es requerido']
     },
     sinopsis: {
-        type: String
+        type: String,
+        required: [true, 'La sinopsis es requerida']
+    },
+    idioma: {
+        type: String,
+        required: [true, 'El idioma es requerido']
     },
     subtitulada: {
         type: String,
@@ -35,10 +48,18 @@ let peliculaSchema = new Schema({
         type: String,
         enum: EnumClasificacion
     },
+    estatus: {
+        type: String,
+        enum: estatusEnum
+    },
     cine: {
         type: Schema.Types.ObjectId,
         ref: 'Cine'
     }
 });
 
-module.exports = moongose.model('Pelicula', peliculaSchema);
+peliculaSchema.plugin(uniqueValidator, {
+    message: '{PATH} debe de ser unico'
+});
+
+module.exports = mongoose.model('Pelicula', peliculaSchema);
