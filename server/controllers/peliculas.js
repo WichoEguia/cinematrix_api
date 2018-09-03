@@ -12,8 +12,6 @@ app.post('/peliculas/nuevo', [verificaToken, verificaAdminRole], (req, res) => {
         'titulo': body.titulo,
         'director': body.director,
         'sinopsis': body.sinopsis,
-        'subtitulada': body.subtitulada,
-        'idioma': body.idioma,
         'duracion': body.duracion,
         'clasificacion': body.clasificacion
     });
@@ -37,7 +35,7 @@ app.get('/peliculas/ver', verificaToken, (req, res) => {
     let desde = Number(req.query.desde || 0);
     let limite = Number(req.query.hasta || 5);
 
-    Pelicula.find({estatus: 'activo'}, 'titulo director').limit(limite).skip(desde).exec((err, peliculas) => {
+    Pelicula.find({estatus: 'activo'}, 'titulo director duracion').limit(limite).skip(desde).exec((err, peliculas) => {
         if (err) {
             return res.status(500).json({
                 ok: false,

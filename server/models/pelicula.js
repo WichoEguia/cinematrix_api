@@ -32,14 +32,6 @@ let peliculaSchema = new Schema({
         type: String,
         required: [true, 'La sinopsis es requerida']
     },
-    idioma: {
-        type: String,
-        required: [true, 'El idioma es requerido']
-    },
-    subtitulada: {
-        type: String,
-        enum: EnumSubtitulada
-    },
     duracion: {
         type: String,
         required: [true, 'La duracion es requerida']
@@ -50,11 +42,8 @@ let peliculaSchema = new Schema({
     },
     estatus: {
         type: String,
-        enum: estatusEnum
-    },
-    cine: {
-        type: Schema.Types.ObjectId,
-        ref: 'Cine'
+        enum: estatusEnum,
+        default: 'activo'
     }
 });
 

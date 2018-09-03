@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 let Schema = mongoose.Schema;
-let comestibleSchema = new Schema({
+let snackSchema = new Schema({
     nombre: {
         type: String,
         required: [true, 'El nombre del producto es requerido']
@@ -12,4 +12,4 @@ let comestibleSchema = new Schema({
     }
 });
 
-module.exports = moongose.model('Comestible', comestibleSchema);
+module.exports = moongose.model('Snack', snackSchema);
