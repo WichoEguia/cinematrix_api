@@ -13,6 +13,16 @@ app.use(bodyParser.json());
 // Habilitar carpeta public
 app.use(express.static(path.resolve(__dirname, '../public')));
 
+// Configurando headers
+app.use((req, res, next) => {
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Headers', 'Authorization-X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Allow-Request-Method, token');
+	res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+	res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+
+	next();
+});
+
 // Configuración global de rutas
 app.use(require('./controllers/index'));
 
