@@ -31,11 +31,11 @@ app.post('/peliculas/nuevo', [verificaToken, verificaAdminRole], (req, res) => {
     });
 });
 
-app.get('/peliculas/ver', verificaToken, (req, res) => {
-    let desde = Number(req.query.desde || 0);
-    let limite = Number(req.query.hasta || 5);
+app.get('/peliculas/ver/:desde?/:hasta?', verificaToken, (req, res) => {
+    let desde = Number(req.params.desde || 0);
+    let limite = Number(req.params.hasta || 6);
 
-    Pelicula.find({estatus: 'activo'}, 'titulo director duracion').limit(limite).skip(desde).exec((err, peliculas) => {
+    Pelicula.find({estatus: 'activo'}, 'titulo director duracion image').limit(limite).skip(desde).exec((err, peliculas) => {
         if (err) {
             return res.status(500).json({
                 ok: false,

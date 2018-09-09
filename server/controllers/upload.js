@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const app = express();
 
-const Usuario = require('../models/usuario');
+const Pelicula = require('../models/pelicula');
 
 // default options
 app.use(fileUpload());
@@ -13,7 +13,7 @@ app.put('/upload/:tipo/:id', (req, res) => {
 	let tipo = req.params.tipo;
 	let id = req.params.id;
 
-	let tiposValidos = ['usuarios', 'productos'];
+	let tiposValidos = ['pelicula', 'snack'];
 
 	if (!tiposValidos.includes(tipo)) {
 		return res.status(400).json({
@@ -56,38 +56,38 @@ app.put('/upload/:tipo/:id', (req, res) => {
 		}
 
 		switch (tipo) {
-			case 'usuarios':
-				imagenUsuario(id, res, nombreArchivoNuevo);
+			case 'pelicula':
+				imagenPelicula(id, res, nombreArchivoNuevo);
 				break;
 
-			case 'productos':
+			case 'snack':
 				imagenProducto(id, res, nombreArchivoNuevo);
 				break;
 		}
   });
 });
 
-function imagenUsuario(id, res, nombreArchivo) {
-	Usuario.findById(id, (err, usuarioBD) => {
+function imagenPelicula(id, res, nombreArchivo) {
+	Pelicula.findById(id, (err, peliculaDB) => {
 		if (err) {
-			borraArchivo(nombreArchivo, 'usuarios');
+			borraArchivo(nombreArchivo, 'pelicula');
 			return res.status(500).json({
 				ok: false,
 				err
 			});
 		}
 
-		if (!usuarioBD) {
+		if (!peliculaDB) {
 			return res.status(400).json({
 				ok: true,
 				err: { message: 'Usuario no existe en base de datos' }
 			});
 		}
 
-		borraArchivo(usuarioBD.img, 'usuarios');
+		borraArchivo(peliculaDB.image, 'pelicula');
 
-		usuarioBD.img = nombreArchivo;
-		usuarioBD.save((err, usuarioGuardado) => {
+		peliculaDB.image = nombreArchivo;
+		peliculaDB.save((err, peliculaGuardada) => {
 			if (err) {
 				return res.status(500).json({
 					ok: false,
@@ -97,7 +97,7 @@ function imagenUsuario(id, res, nombreArchivo) {
 
 			res.json({
 				ok: true,
-				usuario: usuarioGuardado
+				usuario: peliculaGuardada
 			});
 		});
 	});

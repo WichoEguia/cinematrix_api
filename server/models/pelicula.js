@@ -44,6 +44,10 @@ let peliculaSchema = new Schema({
         type: String,
         enum: estatusEnum,
         default: 'activo'
+    },
+    image: {
+        type: String,
+        default: 'null'
     }
 });
 
