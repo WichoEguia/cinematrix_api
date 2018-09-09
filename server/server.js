@@ -10,9 +10,6 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Habilitar carpeta public
-app.use(express.static(path.resolve(__dirname, '../public')));
-
 // Configurando headers
 app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*');
