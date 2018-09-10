@@ -6,9 +6,9 @@ const { verificaToken, verificaAdminRole } = require('../middlewares/autenticaci
 const app = express();
 
 app.post('/peliculas/nuevo', [verificaToken, verificaAdminRole], (req, res) => {
-    var body = req.body;
+    let body = req.body;
 
-    var pelicula = new Pelicula({
+    let pelicula = new Pelicula({
         'titulo': body.titulo,
         'director': body.director,
         'sinopsis': body.sinopsis,
