@@ -57,7 +57,7 @@ app.get('/peliculas/ver/:desde?/:hasta?', verificaToken, (req, res) => {
     });
 });
 
-app.get('/peliculas/ver/:id', verificaToken, (req, res) => {
+app.get('/peliculas/detalle/:id', verificaToken, (req, res) => {
     let id = req.params.id;
 
     Pelicula.findById(id).exec((err, peliculaBD) => {
