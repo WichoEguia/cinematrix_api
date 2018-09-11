@@ -82,7 +82,7 @@ app.get('/peliculas/detalle/:id', verificaToken, (req, res) => {
     });
 });
 
-app.put('/peliculas/actualizar/:id', [verificaToken, verificaAdminRole], (req, res) => {
+app.put('/peliculas/editar/:id', [verificaToken, verificaAdminRole], (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['sinopsis', 'subtitulada', 'idioma', 'clasificacion', 'estatus']);
 
