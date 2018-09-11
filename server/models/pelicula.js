@@ -48,6 +48,10 @@ let peliculaSchema = new Schema({
     image: {
         type: String,
         default: 'null'
+    },
+    idioma: {
+        type: String,
+        required: [true, 'El idioma es requerido']
     }
 });
 

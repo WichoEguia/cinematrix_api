@@ -32,8 +32,10 @@ app.post('/funciones/nueva', [verificaToken, verificaAdminRole], (req, res) => {
     });
 });
 
-app.get('/funciones/ver', verificaToken, (req, res) => {
-    Funcion.find().exec((err, funciones) => {
+app.get('/funciones/ver/:idPelicula', verificaToken, (req, res) => {
+    let idPelicula = req.params.idPelicula;
+
+    Funcion.find({ pelicula: idPelicula }).populate('pelicula').exec((err, funciones) => {
         if (err) {
             return res.status(500).json({
                 ok: false,

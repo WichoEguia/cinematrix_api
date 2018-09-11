@@ -16,10 +16,6 @@ let funcionSchema = new Schema({
         type: String,
         required: [true, 'La fecha es requerida']
     },
-    idioma_original: {
-        type: String,
-        required: [true, 'El idioma es requerido']
-    },
     estado_idioma: {
         type: String,
         default: 'NA',
