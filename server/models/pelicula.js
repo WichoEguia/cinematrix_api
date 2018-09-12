@@ -2,17 +2,12 @@ const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
 
-let EnumSubtitulada = {
-    values: ['Y', 'N'],
-    messages: '{VALUE} no es valido'
-}
-
-let EnumClasificacion = {
+let enumClasificacion = {
     values: ['A', 'B', 'B-15', 'C', 'D'],
     messages: '{VALUE} no es valido'
 }
 
-let estatusEnum = {
+let estadoEnum = {
     values: ['activo', 'baja'],
     message: '{VALUE} no es valido'
 }
@@ -38,20 +33,20 @@ let peliculaSchema = new Schema({
     },
     clasificacion: {
         type: String,
-        enum: EnumClasificacion
+        enum: enumClasificacion
     },
-    estatus: {
+    genero: {
         type: String,
-        enum: estatusEnum,
+        required: [true, 'El genero es requerido']
+    },
+    estado: {
+        type: String,
+        enum: estadoEnum,
         default: 'activo'
     },
     image: {
         type: String,
         default: 'null'
-    },
-    idioma: {
-        type: String,
-        required: [true, 'El idioma es requerido']
     }
 });
 

@@ -13,7 +13,10 @@ app.post('/peliculas/nuevo', [verificaToken, verificaAdminRole], (req, res) => {
         'director': body.director,
         'sinopsis': body.sinopsis,
         'duracion': body.duracion,
-        'clasificacion': body.clasificacion
+        'clasificacion': body.clasificacion,
+        'genero': body.genero,
+        'anio': body.anio,
+        'image': body.image
     });
 
     pelicula.save((err, peliculaDB) => {
@@ -31,11 +34,8 @@ app.post('/peliculas/nuevo', [verificaToken, verificaAdminRole], (req, res) => {
     });
 });
 
-app.get('/peliculas/ver/:desde?/:hasta?', verificaToken, (req, res) => {
-    let desde = Number(req.params.desde || 0);
-    let limite = Number(req.params.hasta || 6);
-
-    Pelicula.find({estatus: 'activo'}, 'titulo director duracion image').limit(limite).skip(desde).exec((err, peliculas) => {
+app.get('/peliculas/ver', verificaToken, (req, res) => {
+    Pelicula.find({}, 'titulo director duracion image').exec((err, peliculas) => {
         if (err) {
             return res.status(500).json({
                 ok: false,
@@ -84,7 +84,7 @@ app.get('/peliculas/detalle/:id', verificaToken, (req, res) => {
 
 app.put('/peliculas/editar/:id', [verificaToken, verificaAdminRole], (req, res) => {
     let id = req.params.id;
-    let body = _.pick(req.body, ['sinopsis', 'subtitulada', 'idioma', 'clasificacion', 'estatus']);
+    let body = _.pick(req.body, ['sinopsis', 'subtitulada', 'idioma', 'clasificacion', 'estado']);
 
     Pelicula.findByIdAndUpdate(id, body, {new: true, runValidators: true}, (err, peliculaBD) => {
         if (err) {
@@ -111,7 +111,7 @@ app.put('/peliculas/editar/:id', [verificaToken, verificaAdminRole], (req, res) 
 app.delete('/peliculas/baja/:id', [verificaToken, verificaAdminRole], (req, res) => {
     let id = req.params.id;
 
-    Pelicula.findByIdAndUpdate(id, {estatus: 'baja'}, {new: true, runValidators: true}, (err, peliculaBD) => {
+    Pelicula.findByIdAndUpdate(id, {estado: 'baja'}, {new: true, runValidators: true}, (err, peliculaBD) => {
         if (err) {
             return res.status(500).json({
                 ok: false,

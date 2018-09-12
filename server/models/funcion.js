@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-let EnumEstadoIdioma = {
-    values: ['subtitulada', 'doblada', 'NA'],
+let enumIdioma = {
+    values: ['subtitulada', 'español', 'idioma original'],
     messages: '{VALUE} no es valido'
 };
 
@@ -16,10 +16,10 @@ let funcionSchema = new Schema({
         type: String,
         required: [true, 'La fecha es requerida']
     },
-    estado_idioma: {
+    idioma: {
         type: String,
-        default: 'NA',
-        enum: EnumEstadoIdioma
+        default: 'idioma original',
+        enum: enumIdioma
     },
     sala: {
         type: String,
@@ -28,11 +28,6 @@ let funcionSchema = new Schema({
     hora: {
         type: String,
         required: [true, 'La hora de la funcion es necesaria']
-    },
-    estado: {
-        type: String,
-        default: 'activa',
-        enum: EnumEstadoFuncion
     },
     pelicula: {
         type: Schema.Types.ObjectId,

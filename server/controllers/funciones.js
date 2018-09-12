@@ -10,11 +10,10 @@ app.post('/funciones/nueva', [verificaToken, verificaAdminRole], (req, res) => {
 
     let funcion = new Funcion({
         'fecha': body.fecha,
-        'idioma_original': body.idioma_original,
-        'estado_idioma': body.estado_idioma,
+        'idioma': body.idioma,
         'sala': body.sala,
-        'pelicula': body.pelicula,
-        'hora': body.hora
+        'hora': body.hora,
+        'pelicula': body.pelicula
     });
 
     funcion.save((err, funcionDB) => {
@@ -59,7 +58,7 @@ app.get('/funciones/ver/:idPelicula', verificaToken, (req, res) => {
 
 app.put('/funciones/editar/:id', [verificaToken, verificaAdminRole], (req, res) => {
     let id = req.params.id;
-    let body = _.pick(req.body, ['fecha', 'idioma_original', 'estado_idioma', 'sala', 'hora', 'estado']);
+    let body = _.pick(req.body, ['fecha', 'idioma', 'sala', 'hora']);
 
     Funcion.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, funcionDB) => {
         if (err) {
