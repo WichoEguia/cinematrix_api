@@ -61,9 +61,14 @@ app.post('/usuario/registro', (req, res) => {
 			});
 		}
 
+		let token = jwt.sign({
+			usuario: usuarioDB
+		}, process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
+
 		res.json({
 			ok: true,
-			usuario: usuarioDB
+			usuario: usuarioDB,
+			token
 		});
 	});
 });
