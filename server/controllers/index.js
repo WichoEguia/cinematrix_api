@@ -6,6 +6,6 @@ app.use(require('./upload'));
 app.use(require('./imagenes'));
 app.use(require('./peliculas'));
 app.use(require('./funciones'));
-// app.use(require('./snacks'));
+app.use(require('./productos'));
 
 module.exports = app;

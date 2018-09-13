@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-let enumEstatus = {
+let estadoEnum = {
     values: ['activo', 'baja'],
     messages: '{VALUE} no es valido'
 }
@@ -18,6 +18,15 @@ let productoSchema = new Schema({
     precio: {
         type: Number,
         required: [true, 'El precio del producto es necesario']
+    },
+    estado: {
+        type: String,
+        default: 'activo',
+        enum: estadoEnum
+    },
+    imagen: {
+        type: String,
+        default: null
     }
 });
 
