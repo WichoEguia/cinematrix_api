@@ -15,7 +15,7 @@ let pedidoSchema = new Schema({
     fecha_creacion: {
         type: Date,
         default: Date.now,
-        required: [true, 'La fecha de creación es necesari']
+        required: [true, 'La fecha de creación es necesaria']
     },
     vigente: {
         type: String,
