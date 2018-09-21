@@ -7,52 +7,36 @@ const { verificaToken, verificaAdminRole } = require('../middlewares/autenticaci
 const app = express();
 
 app.post('/pedidos/crear', verificaToken, (req, res) => {
-    getBoletos().then((res_boletos) => {
-        let body = req.body;
+    let body = req.body;
 
-        // Obtener boletos
-        let boletos = [];
-        body.boletos.forEach(b => {
-            boleto = b.split(',');
-            for (let i = 0; i < boleto[1]; i++) {
-                var result = res_boletos.filter((obj) => {
-                    return obj.tipo === boleto[0]
-                });
-                boletos.push(result[0]._id);
-            }
-        });
+    // Obtener boletos
+    boletos = getBoletos(body.boletos);
 
-        let pedido = new Pedido({
-            'hora_llegada': body.hora_llegada,
-            'boletos': boletos,
-            'usuario': req.usuario._id,
-            'funcion': body.funcion
-        });
+    let pedido = new Pedido({
+        'hora_llegada': body.hora_llegada,
+        'boletos': boletos,
+        'usuario': req.usuario._id,
+        'funcion': body.funcion
+    });
 
-        pedido.save((err, pedidoDB) => {
-            if (err) {
-                return res.status(500).json({
-                    ok: false,
-                    err
-                });
-            }
-
-            if (!pedidoDB) {
-                return res.status(500).json({
-                    ok: false,
-                    err: { message: 'No se pudo crear el pedido' }
-                });
-            }
-
-            res.json({
-                ok: true,
-                pedido: pedidoDB
+    pedido.save((err, pedidoDB) => {
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                err
             });
-        });
-    }, (err) => {
-        return res.status(500).json({
-            ok: false,
-            err
+        }
+
+        if (!pedidoDB) {
+            return res.status(500).json({
+                ok: false,
+                err: { message: 'No se pudo crear el pedido' }
+            });
+        }
+
+        res.json({
+            ok: true,
+            pedido: pedidoDB
         });
     });
 });
@@ -80,19 +64,16 @@ app.get('/pedidos/ver', verificaToken, (req, res) => {
     });
 });
 
-let getBoletos = () => {
-    return new Promise((resolve, reject) => {
-        Boleto.find().exec((err, boletos) => {
-            if (err) {
-                reject({
-                    ok: false,
-                    err
-                });
-            }
-
-            resolve(boletos);
-        });
+let getBoletos = (boletos) => {
+    let resultado = [];
+    boletos.forEach(b => {
+        arr_b = b.split(',');
+        for (let i = 0; i < arr_b[1]; i++) {
+            resultado.push(arr_b[0]);
+        }
     });
+
+    return resultado;
 }
 
 module.exports = app;
