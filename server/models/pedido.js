@@ -23,7 +23,7 @@ let pedidoSchema = new Schema({
         enum: enumVigente
     },
     hora_llegada: {
-        type: true,
+        type: String,
         required: [true, 'La hora de llegada es necesaria']
     },
     estado: {
@@ -35,10 +35,14 @@ let pedidoSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Usuario'
     },
-    pelicula: {
+    funcion: {
         type: Schema.Types.ObjectId,
         ref: 'Pelicula'
-    }
+    },
+    boletos: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Boleto'
+    }]
 });
 
-module.exports = moongose.model('Pedido', pedidoSchema);
+module.exports = mongoose.model('Pedido', pedidoSchema);

@@ -27,6 +27,10 @@ let productoSchema = new Schema({
     imagen: {
         type: String,
         default: null
+    },
+    pedido: {
+        type: Schema.Types.ObjectId,
+        ref: 'Pedido'
     }
 });
 

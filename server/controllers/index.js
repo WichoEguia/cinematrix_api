@@ -7,5 +7,7 @@ app.use(require('./imagenes'));
 app.use(require('./peliculas'));
 app.use(require('./funciones'));
 app.use(require('./productos'));
+app.use(require('./pedidos'));
+app.use(require('./boletos'));
 
 module.exports = app;

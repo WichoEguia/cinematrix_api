@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 let enumTipo = {
-    values: ['Y', 'N'],
-    messages: '{VALUE} no es valido'
+    values: ['niño', 'adulto', 'adulto mayor'],
+    messages: '{VALUE} no es un tipo valido de boleto'
 }
 
 let Schema = mongoose.Schema;
@@ -15,11 +15,7 @@ let boletoSchema = new Schema({
     precio: {
         type: String,
         required: [true, 'El precio del boleto es requerido']
-    },
-    pedido: {
-        type: Schema.Types.ObjectId,
-        ref: 'Pedido'
     }
 });
 
-module.exports = moongose.model('Boleto', boletoSchema);
+module.exports = mongoose.model('Boleto', boletoSchema);

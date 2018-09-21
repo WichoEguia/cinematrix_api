@@ -25,7 +25,7 @@ app.post('/boletos/nuevo', [verificaToken, verificaAdminRole], (req, res) => {
         if (!boletoDB) {
             return res.status(500).json({
                 ok: false,
-                err: { message: 'No se subió registro a base de datos' }
+                err: { message: 'No se registró a base de datos' }
             });
         }
 
