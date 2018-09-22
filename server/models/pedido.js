@@ -42,6 +42,10 @@ let pedidoSchema = new Schema({
     boletos: [{
         type: Schema.Types.ObjectId,
         ref: 'Boleto'
+    }],
+    pedidos: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Producto'
     }]
 });
 

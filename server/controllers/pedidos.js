@@ -12,11 +12,15 @@ app.post('/pedidos/crear', verificaToken, (req, res) => {
     // Obtener boletos
     boletos = getBoletos(body.boletos);
 
+    // Obtener productos
+    productos = getProductos(body.productos);
+
     let pedido = new Pedido({
-        'hora_llegada': body.hora_llegada,
-        'boletos': boletos,
-        'usuario': req.usuario._id,
-        'funcion': body.funcion
+        boletos,
+        productos,
+        hora_llegada: body.hora_llegada,
+        usuario: req.usuario._id,
+        funcion: body.funcion
     });
 
     pedido.save((err, pedidoDB) => {
@@ -70,6 +74,18 @@ let getBoletos = (boletos) => {
         arr_b = b.split(',');
         for (let i = 0; i < arr_b[1]; i++) {
             resultado.push(arr_b[0]);
+        }
+    });
+
+    return resultado;
+}
+
+let getProductos = (productos) => {
+    let resultado = [];
+    productos.forEach(p => {
+        arr_p = p.split(',');
+        for (let i = 0; i < arr_p[1]; i++) {
+            resultado.push(arr_p[0]);
         }
     });
 
