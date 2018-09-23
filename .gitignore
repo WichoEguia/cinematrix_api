@@ -1,3 +1,4 @@
 node_modules/
 
-uploads/pelicula/
+uploads/pelicula/*.jpg
+uploads/pelicula/*.png
