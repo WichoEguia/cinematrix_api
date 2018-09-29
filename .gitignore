@@ -2,3 +2,5 @@ node_modules/
 
 uploads/pelicula/*.jpg
 uploads/pelicula/*.png
+uploads/producto/*.jpg
+uploads/producto/*.png
