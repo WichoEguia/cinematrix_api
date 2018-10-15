@@ -1,6 +1,9 @@
 {
   "name": "api_cinematrix",
   "version": "1.0.0",
+  "engines": {
+    "node": "10.4.1"
+  },
   "description": "API rest para proyecto de prepago en cine",
   "main": "index.js",
   "scripts": {

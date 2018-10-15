@@ -5,6 +5,7 @@ const path = require('path');
 const app = express();
 
 const Pelicula = require('../models/pelicula');
+const Producto = require('../models/producto');
 
 // default options
 app.use(fileUpload());
@@ -13,7 +14,7 @@ app.put('/upload/:tipo/:id', (req, res) => {
 	let tipo = req.params.tipo;
 	let id = req.params.id;
 
-	let tiposValidos = ['pelicula', 'snack'];
+	let tiposValidos = ['pelicula', 'producto'];
 
 	if (!tiposValidos.includes(tipo)) {
 		return res.status(400).json({
@@ -60,7 +61,7 @@ app.put('/upload/:tipo/:id', (req, res) => {
 				imagenPelicula(id, res, nombreArchivoNuevo);
 				break;
 
-			case 'snack':
+			case 'producto':
 				imagenProducto(id, res, nombreArchivoNuevo);
 				break;
 		}
@@ -120,9 +121,9 @@ function imagenProducto(id, res, nombreArchivo) {
 			});
 		}
 
-		borraArchivo(productoBD.img, 'productos');
+		borraArchivo(productoBD.imagen, 'productos');
 
-		productoBD.img = nombreArchivo;
+		productoBD.imagen = nombreArchivo;
 		productoBD.save((err, productoGuardado) => {
 			if (err) {
 				return res.status(500).json({

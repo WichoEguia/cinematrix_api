@@ -1,12 +1,7 @@
 const mongoose = require('mongoose');
 
-let enumVigente = {
-    values: ['Y', 'N'],
-    messages: '{VALUE} no es valido'
-}
-
 let enumEstado = {
-    values: ['pendiente', 'proceso', 'lisito'],
+    values: ['pendiente', 'proceso', 'listo'],
     messages: '{VALUE} no es un estatus valido'
 }
 
@@ -18,18 +13,21 @@ let pedidoSchema = new Schema({
         required: [true, 'La fecha de creación es necesaria']
     },
     vigente: {
-        type: String,
-        default: 'Y',
-        enum: enumVigente
+        type: Boolean,
+        default: true
     },
-    hora_llegada: {
-        type: String,
+    fecha_llegada: {
+        type: Date,
         required: [true, 'La hora de llegada es necesaria']
     },
     estado: {
         type: String,
         default: 'pendiente',
         enum: enumEstado
+    },
+    asientos: {
+        type: String,
+        required: [true, 'Selecciona tus asientos']
     },
     usuario: {
         type: Schema.Types.ObjectId,
@@ -43,7 +41,7 @@ let pedidoSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Boleto'
     }],
-    pedidos: [{
+    productos: [{
         type: Schema.Types.ObjectId,
         ref: 'Producto'
     }]
