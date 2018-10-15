@@ -18,7 +18,9 @@ app.post('/pedidos/crear', verificaToken, (req, res) => {
     let pedido = new Pedido({
         boletos,
         productos,
-        hora_llegada: body.hora_llegada,
+        fecha_llegada: body.fecha_llegada,
+        asientos: body.asientos,
+        monto: body.monto,
         usuario: req.usuario._id,
         funcion: body.funcion
     });

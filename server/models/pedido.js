@@ -29,6 +29,14 @@ let pedidoSchema = new Schema({
         type: String,
         required: [true, 'Selecciona tus asientos']
     },
+    monto: {
+        type: Number,
+        required: [true, 'El monto es necesario']
+    },
+    codigoQR: {
+        type: String,
+        default: ''
+    },
     usuario: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario'
