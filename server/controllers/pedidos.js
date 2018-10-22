@@ -70,6 +70,31 @@ app.get('/pedidos/ver', verificaToken, (req, res) => {
     });
 });
 
+app.get('/pedidos/ver/:id', verificaToken, (req, res) => {
+    let id = req.params.id;
+
+    Pedido.findById(id).populate('boletos').populate('funcion').populate('usuario').exec((err, pedidosDB) => {
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                err
+            });
+        }
+
+        if (!pedidosDB) {
+            return res.status(500).json({
+                ok: false,
+                err: { message: 'No se pudo crear el pedido' }
+            });
+        }
+
+        res.json({
+            ok: true,
+            pedidos: pedidosDB
+        });
+    });
+});
+
 let getBoletos = (boletos) => {
     let resultado = [];
     boletos.forEach(b => {

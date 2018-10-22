@@ -33,17 +33,13 @@ let pedidoSchema = new Schema({
         type: Number,
         required: [true, 'El monto es necesario']
     },
-    codigoQR: {
-        type: String,
-        default: ''
-    },
     usuario: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario'
     },
     funcion: {
         type: Schema.Types.ObjectId,
-        ref: 'Pelicula'
+        ref: 'Funcion'
     },
     boletos: [{
         type: Schema.Types.ObjectId,
