@@ -29,13 +29,17 @@ let pedidoSchema = new Schema({
         type: String,
         required: [true, 'Selecciona tus asientos']
     },
+    monto: {
+        type: Number,
+        required: [true, 'El monto es necesario']
+    },
     usuario: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario'
     },
     funcion: {
         type: Schema.Types.ObjectId,
-        ref: 'Pelicula'
+        ref: 'Funcion'
     },
     boletos: [{
         type: Schema.Types.ObjectId,

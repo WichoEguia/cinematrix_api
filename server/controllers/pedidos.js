@@ -18,7 +18,9 @@ app.post('/pedidos/crear', verificaToken, (req, res) => {
     let pedido = new Pedido({
         boletos,
         productos,
-        hora_llegada: body.hora_llegada,
+        fecha_llegada: body.fecha_llegada,
+        asientos: body.asientos,
+        monto: body.monto,
         usuario: req.usuario._id,
         funcion: body.funcion
     });
@@ -46,26 +48,69 @@ app.post('/pedidos/crear', verificaToken, (req, res) => {
 });
 
 app.get('/pedidos/ver', verificaToken, (req, res) => {
-    Pedido.find({}).populate('boletos funcion usuario').exec((err, pedidosDB) => {
-        if (err) {
-            return res.status(500).json({
-                ok: false,
-                err
-            });
-        }
+    Pedido.find({})
+        .populate('boletos usuario productos')
+        .populate({
+            path: 'funcion',
+            populate: {
+                path: 'pelicula',
+                model: 'Pelicula'
+            }
+        })
+        .exec((err, pedidosDB) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    err
+                });
+            }
 
-        if (!pedidosDB) {
-            return res.status(500).json({
-                ok: false,
-                err: { message: 'No se pudo crear el pedido' }
-            });
-        }
+            if (!pedidosDB) {
+                return res.status(500).json({
+                    ok: false,
+                    err: { message: 'No se pudo crear el pedido' }
+                });
+            }
 
-        res.json({
-            ok: true,
-            pedidos: pedidosDB
+            res.json({
+                ok: true,
+                pedidos: pedidosDB
+            });
         });
-    });
+});
+
+app.get('/pedidos/ver/:id', verificaToken, (req, res) => {
+    let id = req.params.id;
+
+    Pedido.findById(id)
+        .populate('boletos usuario productos')
+        .populate({
+            path: 'funcion',
+            populate: {
+                path: 'pelicula',
+                model: 'Pelicula'
+            }
+        })
+        .exec((err, pedidosDB) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            if (!pedidosDB) {
+                return res.status(500).json({
+                    ok: false,
+                    err: { message: 'No se pudo crear el pedido' }
+                });
+            }
+
+            res.json({
+                ok: true,
+                pedidos: pedidosDB
+            });
+        });
 });
 
 let getBoletos = (boletos) => {
