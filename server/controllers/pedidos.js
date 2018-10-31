@@ -108,9 +108,35 @@ app.get('/pedidos/ver/:id', verificaToken, (req, res) => {
 
             res.json({
                 ok: true,
-                pedidos: pedidosDB
+                pedido: pedidosDB
             });
         });
+});
+
+app.put('/pedido/proceso/:id/:nuevoProceso', [verificaToken, verificaAdminRole], (req, res) => {
+    let nuevoProceso = req.params.nuevoProceso;
+    let id = req.params.id;
+
+    Pedido.findByIdAndUpdate(id, { estado: nuevoProceso }, { new: true, runValidators: true }, (err, pedido) => {
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                err
+            });
+        }
+
+        if (!pedido) {
+            return res.status(500).json({
+                ok: false,
+                err: { message: 'Pedido no existe en base de datos' }
+            });
+        }
+
+        res.json({
+            ok: true,
+            pedido
+        });
+    });
 });
 
 let getBoletos = (boletos) => {
