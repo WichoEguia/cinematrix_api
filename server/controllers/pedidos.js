@@ -139,6 +139,48 @@ app.put('/pedido/proceso/:id/:nuevoProceso', [verificaToken, verificaAdminRole],
     });
 });
 
+app.get('/pedidos/usuario/:id', (req, res) => {
+    let id = req.params.id;
+
+    Pedido.find({ usuario: id })
+        .populate('boletos usuario productos')
+        .populate({
+            path: 'funcion',
+            populate: {
+                path: 'pelicula',
+                model: 'Pelicula'
+            }
+        })
+        .exec((err, pedidos) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            if (!pedidos) {
+                return res.status(500).json({
+                    ok: false,
+                    err: { message: 'Pedido no existe en base de datos' }
+                });
+            }
+
+            if (pedidos.length <= 0) {
+                return res.status(404).json({
+                    ok: false,
+                    err: { message: 'No hay pedidos relacionados a este usuario' }
+                });
+            }
+
+            res.json({
+                ok: true,
+                pedidos,
+                cantidad: pedidos.length
+            });
+        });
+});
+
 let getBoletos = (boletos) => {
     let resultado = [];
     boletos.forEach(b => {
