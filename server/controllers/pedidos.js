@@ -151,6 +151,7 @@ app.get('/pedidos/usuario/:id', (req, res) => {
                 model: 'Pelicula'
             }
         })
+        .sort({ date: 'desc' })
         .exec((err, pedidos) => {
             if (err) {
                 return res.status(500).json({
