@@ -113,7 +113,7 @@ app.get('/pedidos/ver/:id', verificaToken, (req, res) => {
         });
 });
 
-app.post('/pedido/proceso/:id/:nuevoProceso', [verificaToken, verificaAdminRole], (req, res) => {
+app.post('/pedido/proceso/:id/:nuevoProceso', (req, res) => {
     let nuevoProceso = req.params.nuevoProceso;
     let id = req.params.id;
 
